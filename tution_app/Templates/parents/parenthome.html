@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Inspire Learning Center</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body{
+            background:#fff;
+            color:#222;
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:80px;
+            background:#ffffff;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 40px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.08);
+            z-index:1000;
+        }
+
+        .logo{
+            font-size:22px;
+            font-weight:700;
+            color:#000;
+        }
+
+        .nav-links a{
+            margin-left:25px;
+            text-decoration:none;
+            color:#222;
+            font-weight:600;
+            transition:color 0.3s;
+        }
+
+        .nav-links a:hover{
+            color:#f4b400;
+        }
+
+        /* ================= HERO ================= */
+        .hero{
+            min-height:100vh;
+            background:url("{% static 'images/parent.png' %}") center/cover no-repeat;
+            display:flex;
+            align-items:center;
+            padding:120px 80px 60px;
+            position:relative;
+        }
+
+        /* overlay for professional look */
+        .hero::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:rgba(255,255,255,0.75);
+        }
+
+        .hero-content{
+            position:relative;
+            max-width:550px;
+        }
+
+        .hero-content h1{
+            font-size:40px;
+            font-weight:800;
+            color:#111;
+            margin-bottom:15px;
+        }
+
+        .hero-content p{
+            font-size:16px;
+            line-height:1.7;
+            color:#333;
+            margin-bottom:8px;
+            font-weight:500;
+        }
+
+        /* ================= BOOKINGS ================= */
+        .bookings{
+            margin-top:-40px;
+            padding:60px 0;
+            background:#f7f7f7;
+        }
+
+        .bookings h3{
+            text-align:center;
+            font-size:32px;
+            font-weight:800;
+            color:#f4b400;
+            margin-bottom:40px;
+        }
+
+        .booking-row{
+            max-width:1200px;
+            margin:auto;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:25px;
+            padding:0 20px;
+        }
+
+        .booking-card{
+            width:320px;
+            background:#fff;
+            border-radius:14px;
+            overflow:hidden;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+            transition:transform 0.3s;
+        }
+
+        .booking-card:hover{
+            transform:translateY(-6px);
+        }
+
+        .booking-card img{
+            width:100%;
+            height:220px;
+            object-fit:cover;
+        }
+
+        .booking-body{
+            padding:20px;
+            text-align:center;
+        }
+
+        .booking-body h4{
+            font-size:18px;
+            margin-bottom:6px;
+            font-weight:700;
+        }
+
+        .booking-body span{
+            display:block;
+            font-size:14px;
+            color:#555;
+            margin-bottom:4px;
+        }
+
+        .pay-btn{
+            display:inline-block;
+            margin-top:12px;
+            padding:10px 20px;
+            background:#28a745;
+            color:#fff;
+            border-radius:6px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        .paid{
+            display:inline-block;
+            margin-top:12px;
+            padding:10px 20px;
+            background:#17a2b8;
+            color:#fff;
+            border-radius:6px;
+            font-weight:600;
+        }
+
+        /* ================= FOOTER ================= */
+        .footer{
+            background:#6b8481;
+            color:#ccc;
+            padding:60px 20px 30px;
+        }
+
+        .footer-container{
+            max-width:1200px;
+            margin:auto;
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:30px;
+        }
+
+        .footer h3,
+        .footer h4{
+            color:#f4b400;
+            margin-bottom:15px;
+        }
+
+        .footer p,
+        .footer a{
+            font-size:14px;
+            color:#ccc;
+            text-decoration:none;
+            line-height:1.6;
+        }
+
+        .footer a:hover{
+            color:#f4b400;
+        }
+
+        .footer-bottom{
+            text-align:center;
+            margin-top:40px;
+            border-top:1px solid #333;
+            padding-top:15px;
+            font-size:13px;
+            color:#888;
+        }
+
+        /* ================= MOBILE ================= */
+        @media(max-width:900px){
+            .hero{
+                padding:120px 20px;
+            }
+            .footer-container{
+                grid-template-columns:1fr;
+                text-align:center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+    <div class="logo">Inspire Learning Center</div>
+    <nav class="nav-links">
+        <a href="{% url 'parent_home' %}">HOME</a>
+        <a href="{% url 'add_student' %}">ADD STUDENT</a>
+        <a href="{% url 'book_teacher' %}">BOOK TEACHER</a>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p><strong>Your Students:</strong>
+            {% for student in students %}
+                {{ student.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Your approved bookings are listed below.</p>
+    </div>
+</section>
+
+<!-- ================= BOOKINGS ================= -->
+{% if approved_bookings %}
+<section class="bookings">
+    <h3>Your Approved Bookings</h3>
+
+    <div class="booking-row">
+        {% for booking in approved_bookings %}
+        <div class="booking-card">
+            {% if booking.photo %}
+            <img src="{{ booking.photo.url }}">
+            {% endif %}
+            <div class="booking-body">
+                <h4>{{ booking.student_name }}</h4>
+                <span>School: {{ booking.school }}</span>
+                <span>Class: {{ booking.class_name }}</span>
+                <span>Subject: {{ booking.subject }}</span>
+                <span>Teacher: {{ booking.teacher.name }}</span>
+
+                {% if booking.payment_status == 'pending' %}
+                    <a href="{% url 'payment' booking.id %}" class="pay-btn">Pay Now</a>
+                {% else %}
+                    <div class="paid">Paid</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div>
+            <h3>Inspire Learning Center</h3>
+            <p>Learn today to lead tomorrow. We focus on discipline, curiosity and progress.</p>
+        </div>
+
+        <div>
+            <h4>Quick Links</h4>
+            <p><a href="#">Home</a></p>
+            <p><a href="#">Parent</a></p>
+            <p><a href="#">Teacher</a></p>
+            <p><a href="#">Login</a></p>
+        </div>
+
+        <div>
+            <h4>Contact</h4>
+            <p>Email: info@inspirelearningcentre.com</p>
+            <p>Phone: +91 8296574738</p>
+            <p>Location: Mangalore</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Inspire Learning Center. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>

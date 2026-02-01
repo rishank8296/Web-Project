@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Approvals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .section-title {
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .teacher-card, .parent-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .teacher-details, .parent-details {
+            flex: 1;
+        }
+        .teacher-photo, .parent-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .teacher-info, .parent-info {
+            display: flex;
+            align-items: center;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-accept {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-decline {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .no-teachers, .no-parents {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+         
+         /* NAVBAR */
+        .navbar {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem .5rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index:1000;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f4b400;
+        }
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: bolder;
+            transition: color 0.3s;
+        }
+         .nav-links a:hover {
+            color: #f4b400;
+         }
+
+                 /* FOOTER */
+.footer {
+    background-color: #222;
+    color: #ddd;
+    padding: 20px 20px 20px;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: #f4b400;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #f4b400;
+}
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #444;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+        
+    </style>
+</head>
+<body>
+    <section class="banner">
+
+        <header class="navbar">
+            <div class="logo">Admin Dashboard</div>
+            <nav class="nav-links">
+                <a href="{% url 'admin_home' %}">HOME</a>
+                <a href="{% url 'admin_bookings' %}">Bookings</a>
+                <a href="{% url 'admin_approvals' %}">Approvals</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </nav>
+        </header>
+
+        
+    <div class="container">
+        <h1>Teacher Approvals</h1>
+
+        <h2 class="section-title">Pending Teachers</h2>
+        {% if pending_teachers %}
+            {% for teacher in pending_teachers %}
+                <div class="teacher-card">
+                    <div class="teacher-info">
+                        <div class="teacher-details">
+                            <h3>{{ teacher.name }}</h3>
+                            <p><strong>Email:</strong> {{ teacher.user.email }}</p>
+                            <p><strong>Phone:</strong> {{ teacher.phone }}</p>
+                            <p><strong>Address:</strong> {{ teacher.address }}</p>
+                            <p><strong>Qualification:</strong> {{ teacher.qualification }}</p>
+                            <p><strong>Experience:</strong> {{ teacher.experience }} years</p>
+                            <p><strong>Subject:</strong> {{ teacher.subject }}</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="{% url 'approve_teacher' teacher.id %}" class="btn btn-accept">Approve</a>
+                        <a href="{% url 'reject_teacher' teacher.id %}" class="btn btn-decline">Reject</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-teachers">No pending teacher approvals.</p>
+        {% endif %}
+
+        <h2 class="section-title">Approved Teachers</h2>
+        {% if approved_teachers %}
+            {% for teacher in approved_teachers %}
+                <div class="teacher-card">
+                    <div class="teacher-info">
+                        {% if teacher.image %}
+                            <img src="{{ teacher.image.url }}" alt="Teacher Photo" class="teacher-photo">
+                        {% endif %}
+                        <div class="teacher-details">
+                            <h3>{{ teacher.name }}</h3>
+                            <p><strong>Email:</strong> {{ teacher.user.email }}</p>
+                            <p><strong>Phone:</strong> {{ teacher.phone }}</p>
+                            <p><strong>Address:</strong> {{ teacher.address }}</p>
+                            <p><strong>Qualification:</strong> {{ teacher.qualification }}</p>
+                            <p><strong>Experience:</strong> {{ teacher.experience }} years</p>
+                            <p><strong>Subject:</strong> {{ teacher.subject }}</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <span class="btn" style="background-color: #28a745; color: white;">Approved</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-teachers">No approved teachers.</p>
+        {% endif %}
+
+        <h1>Parent Approvals</h1>
+
+        <h2 class="section-title">Pending Parents</h2>
+        {% if pending_parents %}
+            {% for parent in pending_parents %}
+                <div class="parent-card">
+                    <div class="parent-info">
+                        <div class="parent-details">
+                            <h3>{{ parent.name }}</h3>
+                            <p><strong>Email:</strong> {{ parent.user.email }}</p>
+                            <p><strong>Phone:</strong> {{ parent.phone }}</p>
+                            <p><strong>Address:</strong> {{ parent.address }}</p>
+                            <p><strong>Gender:</strong> {{ parent.gender }}</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="{% url 'approve_parent' parent.id %}" class="btn btn-accept">Approve</a>
+                        <a href="{% url 'reject_parent' parent.id %}" class="btn btn-decline">Reject</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-parents">No pending parent approvals.</p>
+        {% endif %}
+
+        <h2 class="section-title">Approved Parents</h2>
+        {% if approved_parents %}
+            {% for parent in approved_parents %}
+                <div class="parent-card">
+                    <div class="parent-info">
+                        {% if parent.image %}
+                            <img src="{{ parent.image.url }}" alt="Parent Photo" class="parent-photo">
+                        {% endif %}
+                        <div class="parent-details">
+                            <h3>{{ parent.name }}</h3>
+                            <p><strong>Email:</strong> {{ parent.user.email }}</p>
+                            <p><strong>Phone:</strong> {{ parent.phone }}</p>
+                            <p><strong>Address:</strong> {{ parent.address }}</p>
+                            <p><strong>Gender:</strong> {{ parent.gender }}</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <span class="btn" style="background-color: #28a745; color: white;">Approved</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-parents">No approved parents.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+

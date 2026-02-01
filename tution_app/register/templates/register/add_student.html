@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Student - Tuition Center</title>
+    <style>
+        /* Reset and base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #fff;
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index:1000;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000000;
+        }
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: bolder;
+            transition: color 0.3s;
+        }
+         .nav-links a:hover {
+            color: #f4b400;
+         }
+
+        /* BANNER */
+        .banner {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #ffffff;
+            background-image: url("{% static 'images/banner-dark.png' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* FORM SECTION */
+        .form-section {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 90px);
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #222;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #f4b400;
+            outline: none;
+        }
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #f4b400;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #e6a300;
+        }
+
+        /* FOOTER */
+.footer {
+    background-color: #808080;
+    color: #ddd;
+    padding: 20px 20px 20px;
+    margin-top: 80px;
+}
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            color: #f4b400;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 5px;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4b400;
+        }
+
+        /* FOOTER BOTTOM */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+            .navbar {
+                padding: 1rem;
+            }
+            .nav-links a {
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="banner">
+
+        <header class="navbar">
+            <div class="logo">Inspire Learning Center</div>
+            <nav class="nav-links">
+                <a href="{% url 'parent_home' %}">HOME</a>
+                <span>{{ user_name }}</span>
+            </nav>
+        </header>
+
+        <main class="form-section">
+            <div class="form-container">
+                <h1>Add Student</h1>
+                <p>Parent: {{ parent_name }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_name">Name</label>
+                        <input type="text" id="id_name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_school">School name</label>
+                        <input type="text" id="id_school" name="school" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_class_name">Class </label>
+                        <input type="text" id="id_class_name" name="class_name" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Add Student</button>
+                </form>
+            </div>
+        </main>
+
+    </section>
+
+     
+</body>
+</html>

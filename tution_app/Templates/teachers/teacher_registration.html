@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Inspire Learning Centre</title> - Teacher Registration</title>
+    <style>
+        /* Reset and base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #fff;
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index:1000;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000000;
+        }
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: bolder;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #f4b400;
+        }
+
+        /* BANNER */
+        .banner {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* REGISTER SECTION */
+        .register {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            padding: 140px 100px 80px;
+            align-items: flex-start;
+            max-width: 2100px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-image: url("{% static 'images/teacher.png' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        .register-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .register-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .register-right img {
+            width: 280px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .second-phase {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: 700;
+            color: #f4b400;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* IMAGE UPLOAD */
+        .image-upload {
+            text-align: left;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .image-upload label {
+            display: inline-block;
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
+
+        .image-upload img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #2c3e50;
+            padding: 5px;
+            display: block;
+        }
+
+        .image-upload input {
+            display: none;
+        }
+
+        .image-upload p {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 14px;
+            color: #555;
+            margin-left: 4px;
+            margin-top: -6px;
+            user-select: none;
+        }
+
+        /* FORM INPUTS */
+        .input-grids input,
+        textarea,
+        select {
+            width: 100%;
+            height: 50px;
+            padding: 14px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            font-size: 15px;
+            outline: none;
+            background: #fafafa;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        #selection {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        #selection select {
+            flex: 1;
+            height: 50px;
+        }
+
+        /* BUTTON */
+        button {
+            background: #ffb52e;
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            transition: background 0.3s;
+            font-family: Arial, sans-serif;
+        }
+
+        button:hover {
+            background: #f4b400;
+        }
+
+        /* FOOTER */
+.footer {
+    background-color: #808080;
+    color: #ddd;
+    padding: 20px 20px 20px;
+    margin-top: 80px;
+}
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            color: #f4b400;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 5px;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4b400;
+        }
+
+        /* FOOTER BOTTOM */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .register {
+                grid-template-columns: 1fr;
+                padding: 80px 20px;
+            }
+            .register-right {
+                margin-top: 30px;
+            }
+            button {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Inspire Learning Center</div>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">HOME</a>
+        </nav>
+    </header>
+
+    <div class="register">
+        <div class="register-left">
+            <h3 class="second-phase">TEACHER Registration</h3>
+
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="image-upload">
+                    <label for="file-input">
+                        <img id="img" src="{% static 'teachers/images/new user.png' %}" alt="Upload Image" />
+                    </label>
+                    <p>Upload Image</p>
+                    <input id="file-input" onchange="readURL(this)" name="image" type="file" />
+                </div>
+
+                <div class="input-grids">
+                    <input type="text" name="Name" placeholder="Your Name*" required />
+                    <input type="email" name="Email" placeholder="Your Email*" required />
+                    <input type="password" name="Password"
+                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}"
+                        placeholder="Password*" required />
+                    <input type="text" name="Number" pattern="[0-9]{9,10}" maxlength="10"
+                        placeholder="Phone Number*" required />
+                    <input type="number" name="Expirience" min="0" max="50" placeholder="Experience (Years)" />
+
+                    <div id="selection">
+                        <select name="Gender" required>
+                            <option value="" selected disabled>Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+
+                        <select name="Subject" required>
+                            <option value="" selected disabled>Subject</option>
+                            <option value="Python">Python</option>
+                            <option value="MySql">MySql</option>
+                            <option value="Java">Java</option>
+                            <option value="C++">C++</option>
+                            <option value="Php">Php</option>
+                        </select>
+                    </div>
+
+                    <textarea name="Address" placeholder="Type your address here*" required></textarea>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+
+    </div>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('img').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+</body>
+</html>

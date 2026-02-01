@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Inspire Learning Center</title>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff;
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f4b400;
+        }
+
+        /* BANNER (FULL SCREEN BACKGROUND IMAGE) */
+        .banner {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("{% static 'images/teacher1.png' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* DARK OVERLAY */
+        .banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .banner * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 120px 60px 60px;
+        }
+
+        .hero-text {
+            max-width: 500px;
+            color: #ffffff;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .second-phase {
+            margin-top: 20px;
+            color: #f4b400;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        .footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 30px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer h3,
+        .footer h4 {
+            color: #f4b400;
+            margin-bottom: 15px;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 6px;
+        }
+
+        .footer ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer ul li a:hover {
+            color: #f4b400;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 20px 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="banner">
+
+    <header class="navbar">
+        <div class="logo">Inspire Learning Center</div>
+            <nav class="nav-links">
+                <a href="{% url 'teacher_home' %}">HOME</a>
+                <a href="{% url 'teacher_students' %}">STUDENTS</a>
+                <a href="{% url 'logout' %}">LOGOUT</a>
+            </nav>
+    </header>
+
+    <main class="hero">
+        <div class="hero-text">
+            <h1>Welcome {{ teacher.name }}</h1>
+            <p>Your guidance today builds the leaders of tomorrow.</p>
+
+            <p class="second-phase">
+                Small lessons today create big successes tomorrow.<br>
+                Teaching is shaping tomorrows world<br>
+                Maintain discipline.
+            </p>
+        </div>
+    </main>
+
+</section>
+
+
+</body>
+</html>
+

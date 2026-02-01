@@ -1,0 +1,392 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Approvals</title>
+
+    <!-- ================= INLINE CSS ================= -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .nav-links a {
+            margin-left: 1.5rem;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f4b400;
+        }
+
+        /* ================= HERO ================= */
+       
+
+        .hero-text {
+            padding: 50px 30px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ================= SECTIONS ================= */
+        .w3l-team {
+            padding: 60px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 15px;
+        }
+
+        .title-style {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .col-lg-4 {
+            width: 33.33%;
+        }
+
+        @media (max-width: 992px) {
+            .col-lg-4 {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .col-lg-4 {
+                width: 100%;
+            }
+        }
+
+        /* ================= CARDS ================= */
+        .box16 {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .box16:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+
+        .box16 img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .box-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .box-content .title {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .post {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        /* ================= BUTTONS ================= */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px 3px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .btn-success { background: #28a745; }
+        .btn-danger { background: #dc3545; }
+        .btn:hover { opacity: 0.9; }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 40px 20px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            color: #f4b400;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 5px;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4b400;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="banner">
+    <header class="navbar">
+        <div class="logo">Inspire Learning Center</div>
+        <nav class="nav-links">
+            <a href="{% url 'admin_home' %}">HOME</a>
+            <a href="{% url 'admin_approvals' %}">APPROVALS</a>
+            <a href="{% url 'admin_bookings' %}">Bookings</a>
+        </nav>
+    </header>
+
+    <div class="hero-text">
+        <h1>Learn Now, Learn for Future</h1>
+        <p>Don't be afraid of anyone. Go forward until you win.</p>
+        <p>Focus on making progress rather than achieving perfection.<br>
+           Cultivate curiosity by asking questions.<br>
+           Maintain discipline.</p>
+    </div>    
+</section>
+
+<!-- ================= PENDING TEACHERS ================= -->
+<section class="w3l-team">
+    <div class="container">
+        <h3 class="title-style">Pending Teachers</h3>
+        <div class="row">
+            {% for teacher in teachers_pending %}
+            <div class="col-lg-4">
+                <div class="box16">
+                    {% if teacher.image %}
+                    <img src="{{ teacher.image.url }}">
+                    {% endif %}
+                    <div class="box-content">
+                        <h3 class="title">{{ teacher.user.username }}</h3>
+                        <span class="post">{{ teacher.user.email }}</span>
+                        <span class="post">{{ teacher.phone }}</span>
+                        <span class="post">{{ teacher.address }}</span>
+
+                        <a href="{% url 'approve_teacher' teacher.id %}" class="btn btn-success">Approve</a>
+                        <a href="{% url 'reject_teacher' teacher.id %}" class="btn btn-danger">Reject</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No pending teachers</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= PENDING PARENTS ================= -->
+<section class="w3l-team">
+    <div class="container">
+        <h3 class="title-style">Pending Parents</h3>
+        <div class="row">
+            {% for parent in parents_pending %}
+            <div class="col-lg-4">
+                <div class="box16">
+                    {% if parent.image %}
+                    <img src="{{ parent.image.url }}">
+                    {% endif %}
+                    <div class="box-content">
+                        <h3 class="title">{{ parent.user.username }}</h3>
+                        <span class="post">{{ parent.user.email }}</span>
+                        <span class="post">{{ parent.phone }}</span>
+                        <span class="post">{{ parent.address }}</span>
+
+                        <a href="{% url 'approve_parent' parent.id %}" class="btn btn-success">Approve</a>
+                        <a href="{% url 'reject_parent' parent.id %}" class="btn btn-danger">Reject</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No pending parents</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= APPROVED TEACHERS ================= -->
+<section class="w3l-team">
+    <div class="container">
+        <h3 class="title-style">Approved Teachers</h3>
+        <div class="row">
+            {% for teacher in teachers_approved %}
+            <div class="col-lg-4">
+                <div class="box16">
+                    {% if teacher.image %}
+                    <img src="{{ teacher.image.url }}">
+                    {% endif %}
+                    <div class="box-content">
+                        <h3 class="title">{{ teacher.user.username }}</h3>
+                        <span class="post">{{ teacher.user.email }}</span>
+
+                        <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No approved teachers yet</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= APPROVED PARENTS ================= -->
+<section class="w3l-team">
+    <div class="container">
+        <h3 class="title-style">Approved Parents</h3>
+        <div class="row">
+            {% for parent in parents_approved %}
+            <div class="col-lg-4">
+                <div class="box16">
+                    {% if parent.image %}
+                    <img src="{{ parent.image.url }}">
+                    {% endif %}
+                    <div class="box-content">
+                        <h3 class="title">{{ parent.user.username }}</h3>
+                        <span class="post">{{ parent.user.email }}</span>
+
+                        <a href="{% url 'delete_parent' parent.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No approved parents yet</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Inspire Learning Center</h3>
+            <p>Learn today to lead tomorrow. We focus on discipline, curiosity, and progress.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Parent</a></li>
+                <li><a href="#">Teacher</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: info@tuitioncenter.com</p>
+            <p>Phone: +91 735604928</p>
+            <p>Location: Mangalore</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 Tuition Center. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
